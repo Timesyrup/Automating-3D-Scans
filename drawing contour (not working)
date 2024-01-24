@@ -1,0 +1,33 @@
+import bpy
+import os
+
+#put the correct pach to the face scans
+scan_path = "C:\\Users\\Yerdana\\Downloads\\poly.glb"
+
+# Clear the work environment 
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.object.select_by_type(type='MESH')
+bpy.ops.object.delete()
+
+# Import the face scan
+bpy.ops.import_scene.gltf(filepath=scan_path)
+
+# create grease pencil tool 
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.object.gpencil_add(type='EMPTY')
+
+#prompt user to draw a contour over the face scan 
+bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
+bpy.ops.object.mode_set(mode='GPENCIL')
+
+# to set active tool to brush 
+bpy.context.scene.tool_settings.gpencil_paint.use_draw_brush = True
+
+# Activate the grease pencil drawing
+bpy.ops.gpencil.draw('INVOKE_DEFAULT', mode='DRAW_POLY', stroke='BOX_SELECT')
+
+# Save the Blender file with the drawn contour
+blend_file_path = bpy.data.filepath
+blend_file_directory = os.path.dirname(blend_file_path)
+output_path = os.path.join(blend_file_directory, "contour.blend")
+bpy.ops.wm.save_as_mainfile(filepath=output_path)
