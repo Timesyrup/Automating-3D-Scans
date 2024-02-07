@@ -1,0 +1,39 @@
+import bpy
+from mathutils import Vector
+
+# Specify the file path
+file_path = r'C:\Users\Yerdana\Downloads\poly.glb'
+
+# Import glTF 2.0 file
+bpy.ops.import_scene.gltf(filepath=file_path)
+
+# Get the active object
+obj = bpy.context.active_object
+
+if obj and obj.type == 'MESH':
+    # Get the mesh data
+    mesh = obj.data
+    
+    # Find the lowest coordinates
+    lowest_point = min(mesh.vertices, key=lambda v: obj.matrix_world @ v.co)
+    
+    if lowest_point:
+        print(f"The lowest point is at coordinates: {lowest_point.co.x}, {lowest_point.co.y}, {lowest_point.co.z}")
+        
+        # Deselect all objects
+        bpy.ops.object.select_all(action='DESELECT')
+        
+        # Create a cube below the lowest point
+        bpy.ops.mesh.primitive_cube_add(size=0.6, location=(lowest_point.co.x, lowest_point.co.y, lowest_point.co.z - 0.02))
+        cube = bpy.context.active_object
+        
+        # Select only the cube
+        bpy.context.view_layer.objects.active = cube
+        cube.select_set(True)
+        
+        # Scale the cube to half the size of the imported 3D scan
+        bpy.ops.transform.resize(value=(0.5, 0.5, 0.5))
+    else:
+        print("No vertices found in the mesh.")
+else:
+    print("No active mesh object found.")

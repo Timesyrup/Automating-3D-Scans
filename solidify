@@ -1,0 +1,25 @@
+import bpy
+
+# Specify the file path
+file_path = r'C:\Users\Yerdana\Downloads\poly.glb'
+
+# Import glTF 2.0 file
+bpy.ops.import_scene.gltf(filepath=file_path)
+
+# Get the active object
+obj = bpy.context.active_object
+
+if obj and obj.type == 'MESH':
+    # Add Solidify modifier
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.modifier_add(type='SOLIDIFY')
+    solidify_modifier = obj.modifiers["Solidify"]
+    solidify_modifier.thickness = 0.00318  # Adjust thickness as needed
+    solidify_modifier.offset = 1.0
+    solidify_modifier.use_even_offset = True
+    solidify_modifier.use_rim = True
+    bpy.ops.object.modifier_apply({"object": obj}, modifier="Solidify")
+    print("Solidify modifier applied.")
+else:
+    print("No active mesh object found.")
+
