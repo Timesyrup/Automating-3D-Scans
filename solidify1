@@ -28,7 +28,7 @@ if obj and obj.type == 'MESH':
     # Add Solidify modifier to the joined object
     bpy.ops.object.modifier_add(type='SOLIDIFY')
     solidify_modifier = obj.modifiers["Solidify"]
-    solidify_modifier.thickness = 0.00318  # Adjust thickness as needed (1/8’)
+    solidify_modifier.thickness = 0.00318  # Adjust thickness as needed (0.00157 for 1/8 inch thickness lead)
     solidify_modifier.offset = 1.0
     solidify_modifier.use_even_offset = False
     solidify_modifier.use_rim = False
