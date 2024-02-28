@@ -1,0 +1,25 @@
+import bpy
+
+# Add a cube
+bpy.ops.mesh.primitive_cube_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+cube = bpy.context.object
+
+# Deselect all objects
+bpy.ops.object.select_all(action='DESELECT')
+
+# Select the cube
+cube.select_set(True)
+
+# Scale the cube
+bpy.ops.transform.resize(value=(0.05, 0.08, 0.05))
+
+# Duplicate the cube
+bpy.ops.object.duplicate_move(OBJECT_OT_duplicate={"linked":False, "mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":(0, 0, 0)})
+
+# Get the duplicated cube (Cube.001)
+cube1 = bpy.context.selected_objects[0]
+
+# Scale Cube.001
+cube1.scale.x *= 1.0001
+cube1.scale.y *= 1.0001
+cube1.scale.z *= 1.0001
