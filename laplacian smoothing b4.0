@@ -1,0 +1,15 @@
+import bpy
+
+# Get the active object(Select the imported scan in edit mode before you run this code) 
+
+obj = bpy.context.active_object
+
+if obj:
+
+    # Add the Laplacian Smooth modifier
+    laplacian_modifier = obj.modifiers.new(name="Laplacian Smooth", type='LAPLACIANSMOOTH')
+    laplacian_modifier.iterations = 1  # Set the number of iterations
+    laplacian_modifier.lambda_factor = 0.5  # Set the lambda factor
+    laplacian_modifier.lambda_border = 0.00 #set lambda border to 0, becasue the scan starts cracking beyond 0
+else:
+    print("Object 'Mat' not found.")
