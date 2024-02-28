@@ -1,0 +1,18 @@
+import bpy
+
+# Get the imported 3D scan object (replace 'Mesh_0' with the actual name)
+scan_object = bpy.data.objects.get('Mesh_0')
+
+if scan_object:
+    # Add solidify modifier
+    bpy.context.view_layer.objects.active = scan_object
+    bpy.ops.object.modifier_add(type='SOLIDIFY')
+    solidify_modifier = scan_object.modifiers['Solidify']
+    solidify_modifier.thickness = 0.00318  # Example thickness value
+
+    # Apply the solidify modifier
+    bpy.ops.object.modifier_apply(modifier='Solidify')
+
+    print("Solidify modifier applied successfully.")
+else:
+    print("Scan object not found. Please check the imported glb file.")
