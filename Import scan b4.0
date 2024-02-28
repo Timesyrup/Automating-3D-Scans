@@ -1,0 +1,12 @@
+import bpy
+
+# Clear existing mesh objects
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.object.select_by_type(type='MESH')
+bpy.ops.object.delete()
+
+# Import glTF 2.0 file (replace with your actual file path)
+file_path = 'C:/Users/Yerdana/Downloads/poly.glb'
+bpy.ops.import_scene.gltf(filepath=file_path)
+
+print("File imported successfully.")
