@@ -21,7 +21,7 @@ bpy.ops.object.delete()
 
 #-----------------------------------------------
 # This moves the selected face to the origin 
-# and rotates it to be normal to the y axis
+# and rotates it to be normal to the z-axis
 #-----------------------------------------------
 
 # Function to calculate the best-fit plane from points
@@ -50,7 +50,7 @@ if selected_faces:
     normal = selected_faces[0].normal
 
     # Calculate the rotation quaternion to align the normal with the positive y-direction
-    align_quaternion = normal.rotation_difference(Vector((0, 1, 0)))
+    align_quaternion = normal.rotation_difference(Vector((0, 0, 1)))
 
     # Rotate the object
     obj.rotation_mode = 'QUATERNION'
