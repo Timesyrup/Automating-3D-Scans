@@ -8,7 +8,8 @@ if scan_object:
     bpy.context.view_layer.objects.active = scan_object
     bpy.ops.object.modifier_add(type='SOLIDIFY')
     solidify_modifier = scan_object.modifiers['Solidify']
-    solidify_modifier.thickness = 0.00318  # Example thickness value
+    solidify_modifier.thickness = 0.00318  # Change thickness value according to the lead thickness
+    solidify_modifier.offset = 1.00  
 
     # Apply the solidify modifier
     bpy.ops.object.modifier_apply(modifier='Solidify')
