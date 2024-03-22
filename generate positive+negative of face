@@ -72,7 +72,7 @@ cube_001 = bpy.context.object
 cube_001.name = "Cube.001"
 
 # Scale Cube.001 
-cube_001.scale = (0.2, 0.2, 0.2) #By default we are using the scale of 0.05 but this can be adjusted as per need.
+cube_001.scale = (0.05, 0.05, 0.05) #By default we are using the scale of 0.05 but this can be adjusted as per need.
 bpy.ops.object.transform_apply(scale=True)
 
 # Duplicate Cube.001 and name it Cube.002
