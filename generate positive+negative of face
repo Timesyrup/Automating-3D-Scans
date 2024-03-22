@@ -2,7 +2,7 @@ import bpy
 import os
 from mathutils import Vector
 
-# Path to your .glb file
+# Path to the .glb file(replace the path file to need specific file location
 file_path = r"C:\Users\Yerdana\Downloads\poly.glb"
 
 # Delete all mesh objects
@@ -19,7 +19,7 @@ imported_object = bpy.context.selected_objects[0]
 # Calculate the dimensions of the imported object
 dimensions = imported_object.dimensions
 
-# Create a cube that is 2 times bigger than the imported object
+# Create a cube that is 2 times bigger than the imported object(This is done to ensure that the object is fully inside the cube. It is essential to do this. If the cube isnt big enough, there might be some problems) 
 bpy.ops.mesh.primitive_cube_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(2*dimensions.x, 2*dimensions.y, 2*dimensions.z))
 
 # Get the cube object
@@ -37,6 +37,8 @@ boolean_modifier.solver = 'EXACT'
 # Apply the modifier
 bpy.ops.object.modifier_apply(modifier=boolean_modifier.name)
 
+#At this point the cube should be looking like the imported scan. Further modifications will be applied to the cube instead so make sure that the nameing is consistent 
+
 # Create a solidify modifier for the cube
 solidify_modifier = cube_object.modifiers.new(name="Solidify", type='SOLIDIFY')
 
@@ -50,7 +52,7 @@ solidify_modifier.use_rim_only = False
 # Apply the modifier
 bpy.ops.object.modifier_apply(modifier=solidify_modifier.name)
 
-# Create a smooth modifier for the cube
+# Create a smooth modifier for the cube: Smooth deform is used instead of laplace smoothing 
 smooth_modifier = cube_object.modifiers.new(name="Smooth", type='SMOOTH')
 
 # Set the smooth settings
@@ -60,13 +62,17 @@ smooth_modifier.iterations = 1
 # Apply the modifier
 bpy.ops.object.modifier_apply(modifier=smooth_modifier.name)
 
-# Add a new cube
+
+#At this point, imported scan should be looking smooth and have some thickness. Adjust the smoothing factors if the scan is not smooth enough 
+#Further process from here is to generate the positive and negative mould 
+
+# Add a new cube  
 bpy.ops.mesh.primitive_cube_add(size=1, enter_editmode=False, align='WORLD', location=(0, 0, 0))
 cube_001 = bpy.context.object
 cube_001.name = "Cube.001"
 
-# Scale Cube.001 by 0.05
-cube_001.scale = (0.05, 0.05, 0.05)
+# Scale Cube.001 
+cube_001.scale = (0.2, 0.2, 0.2) #By default we are using the scale of 0.05 but this can be adjusted as per need.
 bpy.ops.object.transform_apply(scale=True)
 
 # Duplicate Cube.001 and name it Cube.002
@@ -78,7 +84,7 @@ cube_002.name = "Cube.002"
 cube_001.scale = (1.000001, 1.000001, 1.000001)
 bpy.ops.object.transform_apply(scale=True)
 
-# Get the solidified and smoothed cube (replace 'Cube' with the actual name of your cube)
+# Get the solidified and smoothed cube (Make sure the naming of meshes are consistent
 cube = bpy.data.objects['Cube']
 
 # Select Cube.001
@@ -110,6 +116,9 @@ boolean_modifier.solver = 'EXACT'
 
 # Apply the modifier
 bpy.ops.object.modifier_apply(modifier=boolean_modifier.name)
+
+
+
 
 
 
